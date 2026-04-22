@@ -1,0 +1,75 @@
+def show_menu():
+    print("\n" + "=" * 35)
+    print("SHOPPING LIST WITH PRICES")
+    print("=" * 35)
+    print("1. Add item")
+    print("2. Show list")
+    print("3. Show total")
+    print("4. Remove item")
+    print("5. Exit")
+    print("=" * 35)
+
+
+def add_item(items):
+    name = input("Enter item name: ").strip()
+
+    try:
+        price = float(input("Enter price: "))
+        items.append({"name": name, "price": price})
+        print("Item added successfully!")
+    except ValueError:
+        print("Invalid price. Please enter a number.")
+
+
+def show_list(items):
+    if not items:
+        print("Shopping list is empty.")
+        return
+
+    print("\nYour shopping list:")
+    for i, item in enumerate(items, 1):
+        print(f"{i}. {item['name']} - {item['price']:.2f} KGS")
+
+
+def show_total(items):
+    total = sum(item["price"] for item in items)
+    print(f"Total price: {total:.2f} KGS")
+
+
+def remove_item(items):
+    show_list(items)
+
+    if not items:
+        return
+
+    try:
+        index = int(input("Enter item number to remove: ")) - 1
+        removed = items.pop(index)
+        print(f"{removed['name']} removed.")
+    except (ValueError, IndexError):
+        print("Invalid choice.")
+
+
+def main():
+    items = []
+
+    while True:
+        show_menu()
+        choice = input("Choose option: ")
+
+        if choice == "1":
+            add_item(items)
+        elif choice == "2":
+            show_list(items)
+        elif choice == "3":
+            show_total(items)
+        elif choice == "4":
+            remove_item(items)
+        elif choice == "5":
+            print("Program closed.")
+            break
+        else:
+            print("Invalid option.")
+
+
+main()
